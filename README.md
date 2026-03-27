@@ -203,5 +203,5 @@ Este projeto foi desenvolvido com foco em:
 
 ## 👨‍💻 Autor
 
-Desenvolvido por Luiz Oliveira
+Desenvolvido por José Luiz Vitorino Felisbino
 Projeto com fins educacionais e para portfólio.
