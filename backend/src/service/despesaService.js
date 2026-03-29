@@ -5,11 +5,21 @@ const listarDespesas = () => {
 }
 
 const buscarPorId = (id) => {
-    return despesas.find((despesa) => despesa.id === id)
+    const despesa = despesas.find((despesa) => despesa.id === id);
+
+    if (!despesa) {
+        throw new Error("Despesa não encontrada");
+    }
+
+    return despesa;
 }
 
 const filtrarPorStatus = (status) => {
-    return despesas.find((despesa) => despesa.classificacao === status);
+    const despesa = despesas.find((despesa) => despesa.classificacao === status);
+
+    if (!despesa) {
+        throw new Error("Despesa não encontrada");
+    }
 }
 
 const cadastrar = (novaDespesa) => {
@@ -28,7 +38,10 @@ const cadastrar = (novaDespesa) => {
 const atualizar = (id, dadosAtualizados) => {
     const index = despesas.findIndex((d) => d.id === id);
 
-    if (index === -1) return null;
+    if (index === -1) {
+        throw new Error("Despesa não encontrada");
+
+    }
 
     despesas[index] = {
         ...despesas[index],
@@ -41,7 +54,9 @@ const atualizar = (id, dadosAtualizados) => {
 const deletar = (id) => {
     const index = despesas.findIndex((d) => d.id === id);
 
-    if (index === -1) return false;
+    if (index === -1) {
+        throw new Error("Despesa não encontrada");
+    }
 
     despesas.slice(index, 1);
 
