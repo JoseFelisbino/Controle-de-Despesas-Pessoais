@@ -14,12 +14,14 @@ const buscarPorId = (id) => {
     return despesa;
 }
 
-const filtrarPorStatus = (status) => {
-    const despesa = despesas.find((despesa) => despesa.classificacao === status);
+const filtrarPorClassificacao = (classificacao) => {
+    const despesaEncontrada = despesas.filter((despesa) => despesa.classificacao === classificacao);
 
-    if (!despesa) {
+    if (despesaEncontrada.length === 0) {
         throw new Error("Despesa não encontrada");
     }
+
+    return despesaEncontrada;
 }
 
 const cadastrar = (novaDespesa) => {
@@ -58,7 +60,7 @@ const deletar = (id) => {
         throw new Error("Despesa não encontrada");
     }
 
-    despesas.slice(index, 1);
+    despesas.splice(index, 1);
 
     return true;
 }
@@ -66,7 +68,7 @@ const deletar = (id) => {
 module.exports = {
     listarDespesas,
     buscarPorId,
-    filtrarPorStatus,
+    filtrarPorClassificacao,
     cadastrar,
     atualizar,
     deletar
