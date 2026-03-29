@@ -1,207 +1,231 @@
-# 💰 Controle de Despesas Pessoais
+# 💰 Controle de Despesas Pessoais - Backend
 
-Aplicação fullstack para gerenciamento de despesas pessoais, desenvolvida com Node.js no backend (arquitetura MVC) e JavaScript puro no frontend (arquitetura MCP).
+API REST desenvolvida em **Node.js com Express** para gerenciamento de despesas pessoais, permitindo operações completas de CRUD (Create, Read, Update e Delete).
 
-O sistema permite cadastrar, listar e remover despesas, além de calcular automaticamente o total gasto.
+---
 
-> ⚠️ **Observação:** Os dados são armazenados em memória utilizando listas (arrays), ou seja, não há persistência em banco de dados. Ao reiniciar o servidor, os dados são resetados.
+## 📌 Objetivo
+
+O projeto tem como objetivo fornecer uma API simples e eficiente para controle de despesas, permitindo:
+
+* Cadastro de despesas
+* Listagem de registros
+* Busca por ID
+* Atualização de dados
+* Exclusão de despesas
+* Filtros por classificação
 
 ---
 
 ## 🚀 Tecnologias Utilizadas
 
-### 🔙 Backend
-
 * Node.js
 * Express
+* JavaScript (ES6+)
+* CORS
 * Arquitetura MVC
-* JavaScript (CommonJS)
-
-### 🎨 Frontend
-
-* HTML5
-* CSS3
-* JavaScript (Vanilla JS)
-* Arquitetura MCP (Model-Controller-Presenter)
 
 ---
 
-## 🧠 Arquitetura do Projeto
+## ⚠️ Persistência de Dados
 
-### Backend (MVC)
-
-* **Model:** Estrutura de dados em memória (listas/arrays)
-* **Service:** Regras de negócio e validações
-* **Controller:** Entrada e saída da API + tratamento de erros
-* **Routes:** Definição de endpoints
-* **Middleware:** Tratamento global de erros
-
-### Frontend (MCP)
-
-* **Service (Model):** Comunicação com API + tratamento de erros
-* **Presenter (Controller):** Lógica de interação
-* **View:** Manipulação do DOM
+Atualmente, os dados da aplicação são armazenados **em memória**, utilizando uma lista (array).
 
 ---
 
 ## 📁 Estrutura do Projeto
 
-```id="estrutura2"
-backend/
-├── src/
-│   ├── modules/
-│   │   ├── despesas/
-│   │   │   ├── model.js
-│   │   │   ├── service.js
-│   │   │   ├── controller.js
-│   │   │   └── routes.js
-│   ├── middlewares/
-│   │   └── errorHandler.js
-│   ├── app.js
-│   └── server.js
-
-frontend/
-├── index.html
-├── css/
-│   └── style.css
-└── src/
-    ├── main.js
-    └── modules/
-        └── despesas/
-            ├── view.js
-            ├── presenter.js
-            └── service.js
+```
+src/
+│
+├── controller/     # Camada responsável por lidar com requisição e resposta
+├── service/        # Regras de negócio da aplicação
+├── model/          # Estrutura de dados (em memória)
+├── routes/         # Definição das rotas da API
+├── app.js          # Configuração da aplicação
+└── server.js       # Inicialização do servidor
 ```
 
 ---
 
-## ⚙️ Funcionalidades
+## 🧠 Arquitetura MVC
 
-* ✅ Cadastro de despesas
-* ✅ Listagem de despesas
-* ✅ Remoção de despesas
-* ✅ Cálculo automático do total gasto
-* ✅ Integração entre frontend e backend
-* ✅ Tratamento de erros no backend e frontend
+O projeto segue o padrão **MVC (Model-Controller-Service)**:
 
----
+### 🔹 Model
 
-## 🛡️ Tratamento de Erros
+Responsável por armazenar os dados (array em memória).
 
-O projeto implementa um fluxo completo de tratamento de erros, seguindo boas práticas utilizadas em aplicações reais:
+### 🔹 Service
 
-### 🔙 Backend
+Contém a lógica de negócio:
 
-* Uso de `try/catch` nos controllers
-* Encaminhamento de erros com `next(error)`
-* Middleware global para tratamento centralizado (`errorHandler`)
-* Padronização de respostas de erro com status HTTP adequados (400, 404, 500)
-* Validação de dados na camada de service
+* Manipulação de dados
+* Regras de validação
+* Lançamento de erros
 
-### 🌐 Frontend
+### 🔹 Controller
 
-* Tratamento de erros nas requisições com `fetch`
-* Verificação de `response.ok`
-* Exibição de mensagens de erro para o usuário
-* Prevenção de quebra da interface
+Responsável por:
+
+* Receber requisições HTTP
+* Chamar o service
+* Retornar respostas (status + JSON)
+
+### 🔹 Routes
+
+Define os endpoints da API e conecta com os controllers.
 
 ---
 
-## ▶️ Como Executar o Projeto
+## 🔄 Fluxo da aplicação
 
-### 🔧 Backend
-
-1. Acesse a pasta do backend:
-
-```id="cmd6"
-cd backend
 ```
-
-2. Instale as dependências:
-
-```id="cmd7"
-npm install
-```
-
-3. Inicie o servidor:
-
-```id="cmd8"
-npm start
-```
-
-Servidor rodando em:
-
-```id="cmd9"
-http://localhost:3000
+Request → Routes → Controller → Service → Model → Response
 ```
 
 ---
 
-### 🌐 Frontend
+## 🌐 Tratamento de CORS
 
-1. Abra o arquivo:
+A API utiliza o middleware **CORS** para permitir requisições de diferentes origens:
 
-```id="cmd10"
-frontend/index.html
+```js
+app.use(cors());
 ```
 
-Ou utilize uma extensão como **Live Server**.
+Isso é essencial para integração com frontends (React, HTML, etc).
 
 ---
 
-## 🔗 Endpoints da API
+## ⚠️ Tratamento de erros
 
-### 📌 Despesas
+A aplicação utiliza:
 
-| Método | Rota          | Descrição       |
-| ------ | ------------- | --------------- |
-| GET    | /despesas     | Listar despesas |
-| POST   | /despesas     | Criar despesa   |
-| DELETE | /despesas/:id | Remover despesa |
+### ✔️ Try/Catch nos controllers
 
----
+Para capturar erros de execução:
 
-## 🧪 Exemplo de Requisição
-
-```json id="json2"
-POST /despesas
-
-{
-  "id": 1,
-  "descricao": "Mercado",
-  "valor": 150,
-  "categoria": "Alimentação",
-  "data": "2026-03-27"
+```js
+try {
+    // lógica
+} catch (error) {
+    (error);
 }
 ```
 
 ---
 
-## 🎯 Objetivo do Projeto
+### ✔️ Benefícios
 
-Este projeto foi desenvolvido com foco em:
-
-* Praticar arquitetura MVC e MCP
-* Entender integração entre frontend e backend
-* Aplicar boas práticas de organização de código
-* Implementar tratamento de erros robusto
-* Compreender manipulação de dados em memória
-* Construir um projeto de portfólio nível júnior
+* Código mais limpo
+* Reutilização de lógica
+* Padronização das respostas
+* Facilidade de manutenção
 
 ---
 
-## 🚀 Possíveis Melhorias
+## 📡 Endpoints da API
 
-* 🗄️ Persistência com banco de dados (MySQL, MongoDB)
-* 🔐 Autenticação de usuários
-* 📊 Dashboard com gráficos
-* 📅 Filtro por data
-* ✏️ Edição de despesas
-* 🌐 Deploy em nuvem
+### 📌 Despesas
+
+| Método | Rota          | Descrição     |
+| ------ | ------------- | ------------- |
+| GET    | /despesas     | Lista todas   |
+| GET    | /despesas/:id | Busca por ID  |
+| POST   | /despesas     | Cadastra nova |
+| PUT    | /despesas/:id | Atualiza      |
+| DELETE | /despesas/:id | Deleta        |
+
+---
+
+### 🔍 Filtro
+
+| Método | Rota                                   |
+| ------ | -------------------------------------- |
+| GET    | /despesas/classificacao/:classificacao |
+
+---
+
+## 📥 Exemplo de requisição
+
+### POST /despesas
+
+```json
+{
+  "nome": "Energia",
+   "valor": 400,
+   "dataDeVencimento": "10/03/2026",
+   "classificacao": "Pontualmente"
+}
+```
+
+---
+
+## 📤 Exemplo de resposta
+
+```json
+{
+  "id": 0,
+  "nome": "Energia",
+  "valor": 400,
+  "dataDeVencimento": "10/03/2026",
+  "classificacao": "Pontualmente"
+}
+```
+
+---
+
+## ▶️ Como executar o projeto
+
+### 1. Clonar o repositório
+
+```bash
+git clone https://github.com/JoseFelisbino/Controle-de-Despesas-Pessoais.git
+```
+
+### 2. Acessar a pasta
+
+```bash
+cd backend
+```
+
+### 3. Instalar dependências
+
+```bash
+npm install
+```
+
+### 4. Executar o servidor
+
+```bash
+node src/server.js
+```
+
+---
+
+## 🧪 Testes
+
+Recomenda-se utilizar:
+
+* Postman
+* Insomnia
+
+---
+
+## 📌 Melhorias futuras
+
+* Persistência com banco de dados (MySQL ou MongoDB)
+* Autenticação de usuários
+* Paginação e filtros avançados
+* Elaboração do frontend
+* Deploy em nuvem
 
 ---
 
 ## 👨‍💻 Autor
 
-Desenvolvido por José Luiz Vitorino Felisbino
-Projeto com fins educacionais e para portfólio.
+Projeto desenvolvido para fins acadêmicos e aprendizado em desenvolvimento backend.
+
+---
+
