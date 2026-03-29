@@ -21,11 +21,11 @@ const buscarPorId = (requisicao, resposta) => {
 
 const filtroPorClassificacao = (requisicao, resposta) => {
     try {
-        const classificacaoFiltrada = requisicao.params.id;
-        const respostaServiceFiltro = service.filtrarPorStatus(classificacaoFiltrada);
+        const classificacaoFiltrada = requisicao.params.classificacao;
+        const respostaServiceFiltro = service.filtrarPorClassificacao(classificacaoFiltrada);
         resposta.status(200).json(respostaServiceFiltro);
     } catch (error) {
-        return resposta.status(400).json({message: error.message});
+        return resposta.status(404).json({message: error.message});
     }
 }
 
@@ -54,7 +54,7 @@ const deletar = (requisicao, resposta) => {
     try {
         const id = Number(requisicao.params.id);
         const despesaDeleta = service.deletar(id);
-        return resposta.status(204).json({message: "Despesa deletada com sucesso"});
+        return resposta.status(200).json({message: "Despesa deletada com sucesso"});
     } catch (error) {
         return resposta.status(404).json({message: error.message})
     }
